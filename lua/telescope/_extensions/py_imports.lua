@@ -66,7 +66,7 @@ return require('telescope').register_extension {
                 local cusor_position = vim.api.nvim_win_get_cursor(0)
                 vim.api.nvim_win_set_cursor(0, {1,0})
                 vim.api.nvim_put({ trim(selection.value)},"l", false, true)
-                vim.api.nvim_win_set_cursor(0, cusor_position)
+                vim.api.nvim_win_set_cursor(0, {cusor_position[1]+1,cusor_position[2]})
                 vim.cmd('startinsert')
               end)
             end)
