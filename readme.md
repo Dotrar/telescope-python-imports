@@ -20,8 +20,8 @@ telescope.load_extension("py_imports")
 
 Then bind to a key:
 
-I prefer to use ctrl-i while in insert mode.  Note that after text has been inserted, you will return to insert mode
+I prefer to use ctrl-y while in insert mode.  Note that after text has been inserted, you will return to insert mode
 
 ```
-inoremap <c-i> <cmd>:lua require("telescope").extensions.py_imports.search()<CR>
+inoremap <c-y> <cmd>:lua require("telescope").extensions.py_imports.search()<CR>
 ```
