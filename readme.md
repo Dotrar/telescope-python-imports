@@ -2,6 +2,9 @@
 
 This extension will look in your codebase for import statements, and allow you to put them in the codebase easily.
 
+## Screenshot:
+![image](https://github.com/Dotrar/telescope-python-imports/assets/1199335/26f240f4-cd05-40d1-9831-778717a42151)
+
 
 ## How to use
 
