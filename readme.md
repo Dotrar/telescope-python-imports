@@ -28,7 +28,7 @@ Note if called while in insert mode, it will keep you in insert mode
 local python_imports = require('telescope').extensions['python-imports']
 
 -- example keymaps
-vim.keymap.set('i', '<c-y>', python_imports.search,{insert_after = true})
-vim.keymap.set('n', 'gy', python_imports.search,{insert_after = false})
+vim.keymap.set('i', '<c-y>', python_imports.search)
+vim.keymap.set('n', 'gy', python_imports.search,)
 
 ```
