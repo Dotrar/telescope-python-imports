@@ -49,7 +49,7 @@ return require('telescope').register_extension {
             pickers.new(opts, {
                 prompt_title = 'Imports: ',
                 finder = finders.new_oneshot_job(
-                {"rg","--no-filename","from [a-z.]* import [a-z]*"},
+                {"rg","--no-filename","-tpy","from [a-z.]* import [a-z]*"},
                 opts),
                 sorter = conf.generic_sorter(opts),
 
@@ -58,18 +58,16 @@ return require('telescope').register_extension {
                 attach_mappings = function(prompt_bufnr, map)
                     -- when selected something, nvim_put it into the buffer
                     actions.select_default:replace(function()
+                        local mode = vim.fn.mode()
                         actions.close(prompt_bufnr)
                         local selection = action_state.get_selected_entry()
-                        -- bug : need two schedule calls for action.close to finalise
-                        vim.schedule(function ()
-                            vim.schedule(function ()
-                                local cusor_position = vim.api.nvim_win_get_cursor(0)
-                                vim.api.nvim_win_set_cursor(0, {1,0})
-                                vim.api.nvim_put({ trim(selection.value)},"l", false, true)
-                                vim.api.nvim_win_set_cursor(0, {cusor_position[1]+1,cusor_position[2]})
-                                vim.cmd('startinsert')
-                            end)
-                        end)
+                        local cp = vim.api.nvim_win_get_cursor(0)
+                        vim.api.nvim_win_set_cursor(0, {1,0})
+                        vim.api.nvim_put({ trim(selection.value)},"l", false, true)
+                        vim.api.nvim_win_set_cursor(0, {cp[1]+1,cp[2]})
+                        if mode == 'i' then
+                            vim.cmd('startinsert')
+                        end
                     end)
 
                     -- before we close, clear keys
@@ -85,14 +83,5 @@ return require('telescope').register_extension {
 
         end,
 
-        git_files = function(opts)
-            pickers.new(opts, {
-                prompt_title = 'Git files: ',
-                finder = finders.new_oneshot_job(
-                {"git","diff","--name-only", "master"},
-                opts),
-                sorter = conf.generic_sorter(opts),
-            }):find()
-        end,
     },
 }
